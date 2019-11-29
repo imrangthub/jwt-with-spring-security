@@ -14,7 +14,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 @Service
 public class JwtUitl {
 
-	private String SECRET_KEY = "imran";
+	private String SECRET_KEY = "imran_hossain";
 
 	public Claims extractAllClaims(String token) {
 		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();

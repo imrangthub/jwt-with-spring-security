@@ -33,16 +33,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(myUserDetailsService);
-		
+		auth.userDetailsService(myUserDetailsService);	
 	}
-	
 
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable()
-		.authorizeRequests().antMatchers("/authentication").permitAll()
+		.authorizeRequests().antMatchers("/home").permitAll()
+		.antMatchers("/authentication").permitAll()
 	    .antMatchers("/user").hasAuthority("USER")
  		.antMatchers("/admin").hasAuthority("ADMIN")
 	    .antMatchers("/super-admin").hasAuthority("SUPER_ADMIN")
@@ -50,6 +49,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		.and().sessionManagement()
 		.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+		
+		http.logout()
+		.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+		.logoutSuccessUrl("/home");
 			
 	}
 	
@@ -71,6 +74,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //
 //		 //authorize requests		
 // 		http.authorizeRequests()
+	//	.and().httpBasic();
 // 				.antMatchers("/").permitAll()
 // 				.antMatchers("/home").permitAll()
 // 				.antMatchers("/gnr-auth-token").permitAll()
