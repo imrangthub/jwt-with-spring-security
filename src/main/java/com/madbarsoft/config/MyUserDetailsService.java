@@ -22,7 +22,7 @@ public class MyUserDetailsService implements UserDetailsService{
 		
 		if(userName.equals("admin")){
 		    authoritiesList.add(new SimpleGrantedAuthority("ADMIN"));
-			//authoritiesList.add(new SimpleGrantedAuthority("USER"));
+			authoritiesList.add(new SimpleGrantedAuthority("USER"));
 			return new User("admin", "admin", authoritiesList);
 		}
 		
