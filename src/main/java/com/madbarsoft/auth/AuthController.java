@@ -35,7 +35,7 @@ public class AuthController {
 	
 	
 	@RequestMapping(value="/authentication", method= RequestMethod.POST)
-	public ResponseEntity<?> createAuthToken(@RequestBody AuthenticationRequest authReq) throws Exception{
+	public ResponseEntity createAuthToken(@RequestBody AuthenticationRequest authReq) throws Exception{
 		
 		Authentication curretnAuthentication = SecurityContextHolder.getContext().getAuthentication();
 		System.out.println("Curretn Authentication All       ####: "+curretnAuthentication);
@@ -62,9 +62,14 @@ public class AuthController {
 	
 	
 	
-	@GetMapping({"/test-auth"})
-	public String testMsg(){
-		return "Auth Test action";
+	@GetMapping({"/access-denied"})
+	public String accessDenied(){
+		return "Your request has been denied !";
+	}
+	
+	@GetMapping({"/error"})
+	public String error(){
+		return "This is and Unknow Error Request !";
 	}
 	
 	

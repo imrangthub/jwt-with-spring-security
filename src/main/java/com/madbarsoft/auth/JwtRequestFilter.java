@@ -7,6 +7,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import com.madbarsoft.config.MyUserDetailsService;
 import com.madbarsoft.utility.JwtUitl;
+import com.madbarsoft.utility.MyCustomException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {	
@@ -35,6 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		String userName = null;
 		String jwtStr = null;
 		
+
 		if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
 			jwtStr = authorizationHeader.substring(7);
 			userName = jwtUitl.extractUserName(jwtStr);
